@@ -120,6 +120,8 @@ targets:
         vlog_options : +define+SIM +define+MODELSIM_SIM -timescale 1ns/1ps
         vsim_options : -L altera_mf_ver -L altera_mf
       
+  default:
+    <<: *sim
   de0_nano_core_tb:
     <<: *sim
     toplevel : de0_nano_core_tb
