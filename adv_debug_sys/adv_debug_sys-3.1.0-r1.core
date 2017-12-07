@@ -30,11 +30,16 @@ filesets:
     file_type : verilogSource
 
 targets:
-  synth:
+  default:
     filesets : [adv_dbg_if]
   sim:
     filesets : [adv_dbg_if]
   jsp_tb:
-    default_sim : icarus
+    default_tool : icarus
     filesets : [adv_dbg_if, jsp_tb]
     toplevel : adv_debug_tb
+provider:
+  name    : github
+  user    : olofk
+  repo    : adv_debug_sys
+  version : ADS_RELEASE_3_1_0

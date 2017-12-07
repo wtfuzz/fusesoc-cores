@@ -31,6 +31,8 @@ vpi:
 
 targets:
   default:
+    parameters:
+      - elf-load
     vpi :
       #- "!tool_verilator ? (bfm_files)"
       - "!tool_xsim ? (!tool_isim ? (elf-loader))"
