@@ -9,7 +9,7 @@ filesets:
       - elf-loader.c
       - elf-loader.h:
           is_include_file: true
-    file_type: CSource
+    file_type: cSource
   vpi:
     files:
       - vpi_wrapper.c
@@ -31,8 +31,12 @@ vpi:
 
 targets:
   default:
+    filesets: ["tool_verilator? ( src )"]
     parameters:
       - elf-load
+    tools:
+      verilator:
+        libs : [-lelf]
     vpi :
       #- "!tool_verilator ? (bfm_files)"
       - "!tool_xsim ? (!tool_isim ? (elf-loader))"

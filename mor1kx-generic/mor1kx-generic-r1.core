@@ -11,10 +11,10 @@ filesets:
     file_type: verilogSource
     depend:
       - adv_debug_sys
-      - jtag_tap-1.13
+      - ">=jtag_tap-1.13"
       - mor1kx
-      - uart16550-1.5.4
-      - wb_intercon-1.0
+      - ">=uart16550-1.5.4"
+      - ">=wb_intercon-1.0"
       - wb_ram-1.0
   tb:
     files:
@@ -24,29 +24,34 @@ filesets:
     file_type : verilogSource
     depend:
       - elf-loader
-      - jtag_vpi-r2
+      - ">=jtag_vpi-r2"
       - vlog_tb_utils-1.0
       - tool_verilator? (verilator_tb_utils)
   verilator_tb:
     files:
-      - bench/verilator/tb.cpp
+      - bench/verilator/tb.cpp: {file_type : cppSource}
+    depend:
+      - elf-loader
+      - verilator_tb_utils
       
 targets:
   default:
     filesets: [rtl]
       
-  sim:
+  tb:
     default_tool : icarus
     filesets:
       - rtl
-      - tb
+      - "!tool_verilator? (tb)"
       - tool_verilator? (verilator_tb)
     tools: 
       icarus:
         iverilog_options: -DSIM
       verilator:
+        mode : cc
         verilator_options: -Wno-fatal --trace
-    toplevel: orpsoc_tb
+#    toplevel : orpsoc_top
+    toplevel: ["!tool_verilator? (orpsoc_tb)", "tool_verilator? (orpsoc_top)"]
 #top_module    = orpsoc_top
 
 parameters:
