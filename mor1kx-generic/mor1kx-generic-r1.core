@@ -44,16 +44,21 @@ targets:
       - rtl
       - "!tool_verilator? (tb)"
       - tool_verilator? (verilator_tb)
-    tools: 
+    tools:
       icarus:
-        iverilog_options: -DSIM
+        iverilog_options: [-DSIM]
       verilator:
         mode : cc
-        verilator_options: -Wno-fatal --trace
-#    toplevel : orpsoc_top
+        verilator_options: [-Wno-fatal, --trace]
     toplevel: ["!tool_verilator? (orpsoc_tb)", "tool_verilator? (orpsoc_top)"]
-#top_module    = orpsoc_top
-
+  lint:
+    default_tool : verilator
+    filesets:
+      - rtl
+    tools:
+      verilator:
+        mode: lint-only
+    toplevel : [orpsoc_top]
 parameters:
   clear_ram:
     datatype    : bool
